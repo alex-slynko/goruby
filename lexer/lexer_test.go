@@ -41,6 +41,8 @@ end
 [1, 2]
 nil
 self
+module Abc
+end
 `
 
 	tests := []struct {
@@ -153,6 +155,11 @@ self
 		{token.NIL, "nil"},
 		{token.NEWLINE, "\n"},
 		{token.SELF, "self"},
+		{token.NEWLINE, "\n"},
+		{token.MODULE, "module"},
+		{token.CONST, "Abc"},
+		{token.NEWLINE, "\n"},
+		{token.END, "end"},
 		{token.NEWLINE, "\n"},
 		{token.EOF, ""},
 	}

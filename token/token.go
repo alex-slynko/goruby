@@ -1,5 +1,10 @@
 package token
 
+import (
+	"bytes"
+	"unicode"
+)
+
 //go:generate stringer -type=Type
 
 // Recognized token types
@@ -10,6 +15,7 @@ const (
 	// Identifier + literals
 
 	IDENT
+	CONST
 	INT
 	STRING
 	SYMBOL // :symbol
@@ -55,6 +61,7 @@ const (
 	FALSE
 	RETURN
 	NIL
+	MODULE
 )
 
 var keywords = map[string]Type{
@@ -68,13 +75,17 @@ var keywords = map[string]Type{
 	"nil":    NIL,
 	"return": RETURN,
 	"self":   SELF,
+	"module": MODULE,
 }
 
-// LookupIdent returns a keyword TokenType if ident is a keyword or IDENT
-// otherwise
+// LookupIdent returns a keyword Type if ident is a keyword. If ident starts
+// with an upper character it returns CONST. In any other case it returns IDENT
 func LookupIdent(ident string) Type {
 	if tok, ok := keywords[ident]; ok {
 		return tok
+	}
+	if unicode.IsUpper(bytes.Runes([]byte(ident))[0]) {
+		return CONST
 	}
 	return IDENT
 }

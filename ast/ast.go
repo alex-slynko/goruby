@@ -163,6 +163,9 @@ func (i *Identifier) String() string  { return i.Value }
 func (i *Identifier) expressionNode() {}
 func (i *Identifier) literalNode()    {}
 
+// IsConstant returns true if the Identifier represents a Constant, false otherwise
+func (i *Identifier) IsConstant() bool { return i.Token.Type == token.CONST }
+
 // TokenLiteral returns the literal of the token.IDENT token
 func (i *Identifier) TokenLiteral() string { return i.Token.Literal }
 
@@ -356,6 +359,29 @@ func (ce *ContextCallExpression) String() string {
 	out.WriteString("(")
 	out.WriteString(strings.Join(args, ", "))
 	out.WriteString(")")
+	return out.String()
+}
+
+// ModuleExpression represents a module definition
+type ModuleExpression struct {
+	Token token.Token // The module keyword
+	Name  *Identifier // The module name, will always be a const
+	Body  *BlockStatement
+}
+
+func (m *ModuleExpression) expressionNode() {}
+
+// TokenLiteral returns the literal from token.MODULE
+func (m *ModuleExpression) TokenLiteral() string { return m.Token.Literal }
+func (m *ModuleExpression) String() string {
+	var out bytes.Buffer
+	out.WriteString(m.TokenLiteral())
+	out.WriteString(" ")
+	out.WriteString(m.Name.String())
+	out.WriteString("\n")
+	out.WriteString(m.Body.String())
+	out.WriteString("\n")
+	out.WriteString(" end")
 	return out.String()
 }
 
