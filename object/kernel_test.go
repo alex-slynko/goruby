@@ -18,7 +18,7 @@ func TestKernelMethods(t *testing.T) {
 		context := &callContext{
 			receiver: &testRubyObject{
 				class: &class{
-					instanceMethods: contextMethods,
+					instanceMethods: NewMethodSet(contextMethods),
 					superClass:      nil,
 				},
 			},
@@ -76,9 +76,9 @@ func TestKernelMethods(t *testing.T) {
 		context := &callContext{
 			receiver: &testRubyObject{
 				class: &class{
-					instanceMethods: contextMethods,
+					instanceMethods: NewMethodSet(contextMethods),
 					superClass: &class{
-						instanceMethods: superClassMethods,
+						instanceMethods: NewMethodSet(superClassMethods),
 						superClass:      nil,
 					},
 				},
@@ -134,7 +134,7 @@ func TestKernelMethods(t *testing.T) {
 		context := &callContext{
 			receiver: &testRubyObject{
 				class: &class{
-					instanceMethods: contextMethods,
+					instanceMethods: NewMethodSet(contextMethods),
 					superClass:      nil,
 				},
 			},

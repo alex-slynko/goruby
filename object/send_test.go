@@ -45,10 +45,10 @@ func TestSend(t *testing.T) {
 			receiver: &testRubyObject{
 				class: &class{
 					name:            "base class",
-					instanceMethods: methods,
+					instanceMethods: NewMethodSet(methods),
 					superClass: &class{
 						name:            "super class",
-						instanceMethods: superMethods,
+						instanceMethods: NewMethodSet(superMethods),
 						superClass:      basicObjectClass,
 					},
 				},
@@ -106,10 +106,10 @@ func TestSend(t *testing.T) {
 				&testRubyObject{
 					class: &class{
 						name:            "base class",
-						instanceMethods: methods,
+						instanceMethods: NewMethodSet(methods),
 						superClass: &class{
 							name:            "super class",
-							instanceMethods: superMethods,
+							instanceMethods: NewMethodSet(superMethods),
 							superClass:      basicObjectClass,
 						},
 					},
@@ -175,7 +175,7 @@ func TestAddMethod(t *testing.T) {
 		context := &testRubyObject{
 			class: &class{
 				name:            "base class",
-				instanceMethods: map[string]RubyMethod{},
+				instanceMethods: NewMethodSet(map[string]RubyMethod{}),
 				superClass:      objectClass,
 			},
 		}
@@ -190,7 +190,7 @@ func TestAddMethod(t *testing.T) {
 
 		newContext := AddMethod(context, "foo", fn)
 
-		_, ok := newContext.Class().Methods()["foo"]
+		_, ok := newContext.Class().Methods().Get("foo")
 		if !ok {
 			t.Logf("Expected object to have method foo")
 			t.Fail()
@@ -202,7 +202,7 @@ func TestAddMethod(t *testing.T) {
 				RubyObject: &testRubyObject{
 					class: &class{
 						name:            "base class",
-						instanceMethods: map[string]RubyMethod{},
+						instanceMethods: NewMethodSet(map[string]RubyMethod{}),
 						superClass:      objectClass,
 					},
 				},
@@ -223,13 +223,13 @@ func TestAddMethod(t *testing.T) {
 
 		newContext := AddMethod(context, "foo", fn)
 
-		_, ok := newContext.Class().Methods()["foo"]
+		_, ok := newContext.Class().Methods().Get("foo")
 		if !ok {
 			t.Logf("Expected object to have method foo")
 			t.Fail()
 		}
 
-		_, ok = newContext.Class().Methods()["bar"]
+		_, ok = newContext.Class().Methods().Get("bar")
 		if !ok {
 			t.Logf("Expected object to have method bar")
 			t.Fail()
@@ -240,7 +240,7 @@ func TestAddMethod(t *testing.T) {
 			RubyObject: &testRubyObject{
 				class: &class{
 					name:            "base class",
-					instanceMethods: map[string]RubyMethod{},
+					instanceMethods: NewMethodSet(map[string]RubyMethod{}),
 					superClass:      objectClass,
 				},
 			},
@@ -256,7 +256,7 @@ func TestAddMethod(t *testing.T) {
 
 		newContext := AddMethod(context, "foo", fn)
 
-		_, ok := newContext.Class().Methods()["foo"]
+		_, ok := newContext.Class().Methods().Get("foo")
 		if !ok {
 			t.Logf("Expected object to have method foo")
 			t.Fail()
@@ -282,7 +282,7 @@ func TestAddMethod(t *testing.T) {
 				RubyObject: &testRubyObject{
 					class: &class{
 						name:            "base class",
-						instanceMethods: map[string]RubyMethod{},
+						instanceMethods: NewMethodSet(map[string]RubyMethod{}),
 						superClass:      objectClass,
 					},
 				},
@@ -304,13 +304,13 @@ func TestAddMethod(t *testing.T) {
 
 		newContext := AddMethod(context, "foo", fn)
 
-		_, ok := newContext.Class().Methods()["foo"]
+		_, ok := newContext.Class().Methods().Get("foo")
 		if !ok {
 			t.Logf("Expected object to have method foo")
 			t.Fail()
 		}
 
-		_, ok = newContext.Class().Methods()["bar"]
+		_, ok = newContext.Class().Methods().Get("bar")
 		if !ok {
 			t.Logf("Expected object to have method bar")
 			t.Fail()

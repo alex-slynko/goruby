@@ -1,11 +1,11 @@
 package object
 
 func newEigenclass(wrappedClass RubyClass, methods map[string]RubyMethod) *eigenclass {
-	return &eigenclass{methods: methods, wrappedClass: wrappedClass}
+	return &eigenclass{methods: NewMethodSet(methods), wrappedClass: wrappedClass}
 }
 
 type eigenclass struct {
-	methods      map[string]RubyMethod
+	methods      SettableMethodSet
 	wrappedClass RubyClass
 }
 
@@ -22,7 +22,7 @@ func (e *eigenclass) Class() RubyClass {
 	}
 	return classClass
 }
-func (e *eigenclass) Methods() map[string]RubyMethod { return e.methods }
+func (e *eigenclass) Methods() MethodSet { return e.methods }
 func (e *eigenclass) SuperClass() RubyClass {
 	if e.wrappedClass != nil {
 		return e.wrappedClass
@@ -30,5 +30,5 @@ func (e *eigenclass) SuperClass() RubyClass {
 	return objectClass
 }
 func (e *eigenclass) addMethod(name string, method RubyMethod) {
-	e.methods[name] = method
+	e.methods.Set(name, method)
 }

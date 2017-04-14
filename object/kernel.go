@@ -38,7 +38,7 @@ func kernelMethods(context CallContext, args ...RubyObject) (RubyObject, error) 
 	var methodSymbols []RubyObject
 	class := context.Receiver().Class()
 	for class != nil {
-		methods := class.Methods()
+		methods := class.Methods().GetAll()
 		for meth, fn := range methods {
 			if fn.Visibility() == PUBLIC_METHOD {
 				methodSymbols = append(methodSymbols, &Symbol{meth})
