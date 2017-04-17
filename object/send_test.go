@@ -114,6 +114,7 @@ func TestSend(t *testing.T) {
 						},
 					},
 				},
+				"main",
 			},
 		}
 
@@ -244,6 +245,7 @@ func TestAddMethod(t *testing.T) {
 					superClass:      objectClass,
 				},
 			},
+			Name: "main",
 		}
 
 		fn := &Function{
@@ -292,6 +294,7 @@ func TestAddMethod(t *testing.T) {
 					}),
 				}),
 			},
+			Name: "main",
 		}
 
 		fn := &Function{
